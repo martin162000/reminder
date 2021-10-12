@@ -1,0 +1,25 @@
+.butSubmit {
+    justify-content: right;
+    display: flex;
+}
+
+.titleForm {
+    width: 50%;
+    justify-content: start;
+    display: flex;
+    margin-top: 4em;
+}
+
+@media only screen and (max-width: 1200px) {
+ 
+    .titleForm {
+        width: 70%;
+      } 
+    }
+
+@media only screen and (max-width: 800px) {
+ 
+        .titleForm {
+            width: 80%;
+          } 
+        }

@@ -1,24 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './scss/App.scss';
+
+
+import {Switch, Route, Redirect} from 'react-router-dom';
+
+import Home from './components/Home'
+import Add from './components/Add'
+import Post from './components/Post'
+
 
 function App() {
+
+    const [allPosts, setAllPosts] = useState(() => {
+    const saved:any = localStorage.getItem("Data");
+    const initialValue = JSON.parse(saved);
+   return initialValue || "";
+});
+
+      // CALLBACK
+      const handleChange = (data:any) => {
+        setAllPosts(data)
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+          
+        <div className="reminder">
+        <h1> Reminder </h1>
+          
+
+          <Switch>
+
+
+              <Route exact path="/">
+                  <Redirect to="/home" />
+              </Route>
+
+              <Route path="/reminder">
+                  <Redirect to="/home" />
+              </Route>
+
+              <Route path="/home" exact >
+                <Home 
+                     postsFromLocalStorage = {allPosts}
+                     onChange = {handleChange}
+                 />
+              </Route>
+
+              <Route path="/add"> 
+                  <Add 
+                        postsFromLocalStorage = {allPosts}
+                        onChange = {handleChange}
+                    />
+              </Route>
+              
+              <Route path="/post/:postId" component={Post}>
+                  <Post
+                        postsFromLocalStorage = {allPosts}
+                        onChange = {handleChange}
+                    />
+              </Route>
+
+           </Switch>
+        </div>
+
+
     </div>
   );
 }
